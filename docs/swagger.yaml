@@ -1,0 +1,101 @@
+definitions:
+  docker.CreateRequest:
+    properties:
+      cmd:
+        items:
+          type: string
+        type: array
+      image:
+        type: string
+      name:
+        type: string
+    required:
+    - image
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - '*/*'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Show the status of server.
+  /containers/:id:
+    delete:
+      consumes:
+      - '*/*'
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            additionalProperties: true
+            type: object
+      summary: deletes a Docker container by ID
+    get:
+      consumes:
+      - '*/*'
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            additionalProperties: true
+            type: object
+      summary: inspects a Docker container by ID
+  /containers/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/docker.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            additionalProperties: true
+            type: object
+      summary: creates a new Docker container
+  /containers/list:
+    get:
+      consumes:
+      - '*/*'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            additionalProperties: true
+            type: object
+      summary: lists all Docker containers
+swagger: "2.0"
